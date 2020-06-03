@@ -1,19 +1,11 @@
 import express from 'express';
+import routes from './routes';
 
 const app = express();
 
-app.get('/users', (request, response) => {
-  console.log('Rota de usuários');
+app.use(express.json());
 
-  //  JSON
-
-  response.json([
-    'Lucas',
-    'Cleiton',
-    'Robson',
-    'Daniel'
-  ]);
-});
+app.use(routes);
 
 app.listen(3333, () => {
   console.log('Server avaliable on http://localhost:3333/')
