@@ -2,7 +2,7 @@ import express from 'express';
 
 const routes = express.Router();
 
-routes.get('/users', (request, response) => {
+routes.get('/', (request, response) => {
   return response.json({ message: "placeholder" });
 });
 
