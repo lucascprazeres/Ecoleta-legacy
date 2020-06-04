@@ -52,7 +52,7 @@ const CreatePoint = () => {
 
   useEffect(() => {
     if (!selectedUF || selectedUF === '0') {
-      return;
+      return setCities([]);
     }
 
     axios.get<IBGECityResponse[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUF}/municipios`)
@@ -162,9 +162,11 @@ const CreatePoint = () => {
                 onChange={handleCitySelection}
               >
                 <option value="0">Selecione uma cidade</option>
-                {cities.map(city => (
+                {selectedUF || selectedUF !== '0'
+                  ? cities.map(city => (
                   <option key={city} value={city}>{city}</option>
-                ))}
+                  ))
+                  : null}
               </select>
             </div>
           </div>
