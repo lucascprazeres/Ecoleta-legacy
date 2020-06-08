@@ -28,7 +28,7 @@ const Dropzone: React.FC<Props> = ({ onFileUploaded }) => {
     <div className="dropzone" {...getRootProps()}>
       <input {...getInputProps()} accept="image/*" />
       {
-        selectedFileURL
+        isDragActive
           ? <img src={selectedFileURL} alt="Point thumbnail" />
           : (
             <p>
