@@ -118,4 +118,8 @@ npm start
 Se eu consegui te despertar interesse por alguma dessas tecnologias ou assuntos que voçê viu até aqui, peço que contribua com o projeto clicando em *star repository*, mais acima.
 
 #### :rocket: Isso não teria sido possível sem...
-Como foi dito acima, todo o projeto foi construído graças à Next Level Week, promovida pelo pessoal da rocketseat, então, se você quer ver mais projetos como esse, além de muito conteúdo sobre desenvolvimento web, eles têm um canal maneiro no youtube, corre lá!
+Como foi dito acima, todo o projeto foi construído graças à Next Level Week, promovida pelo pessoal da rocketseat, então, se você quer ver mais projetos como esse, além de muito conteúdo sobre desenvolvimento web, eles têm um canal maneiro no [youtube](https://www.youtube.com/channel/UCSfwM5u0Kce6Cce8_S72olg), corre lá!
+
+***
+
+Feito com :swet_drops: and :heart: por [Lucas dos Prazeres](https://www.linkedin.com/in/lucas-prazeres-781772182/)
