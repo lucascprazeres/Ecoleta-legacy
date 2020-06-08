@@ -122,4 +122,4 @@ Como foi dito acima, todo o projeto foi construído graças à Next Level Week, 
 
 ***
 
-Feito com :swet_drops: and :heart: por [Lucas dos Prazeres](https://www.linkedin.com/in/lucas-prazeres-781772182/)
+Feito com :sweat_drops: and :purple_heart: por [Lucas dos Prazeres](https://www.linkedin.com/in/lucas-prazeres-781772182/)
