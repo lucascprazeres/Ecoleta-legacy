@@ -1,15 +1,13 @@
 import knex from '../../database/connection';
-import ip from 'ip';
 
 import { IListPointsDTO, ICreatePointDTO, IPointsRepository } from '../IPointsRepository';
 import { Point } from '../../interfaces/Point';
+import { getPointsWithImageUrl, parseItemsIntoNumbers } from '../../utils/serialize';
 
 
 export class PointsRepository implements IPointsRepository {
   async listByLocationAndItems({ city, uf, items }: IListPointsDTO) {
-    const parsedItems = String(items)
-      .split(',')
-      .map(item => Number(item.trim()));
+    const parsedItems = parseItemsIntoNumbers(String(items));
 
     const points = await knex('points')
       .join('point_items', 'points.id', '=', 'point_items.point_id')
@@ -19,12 +17,7 @@ export class PointsRepository implements IPointsRepository {
       .distinct()
       .select('points.*');
 
-    const serializedPoints = points.map(point => {
-      return {
-        ...point,
-        image_url: `http://${ip.address()}:3333/uploads/${point.image}`,
-      }
-    });
+    const serializedPoints = getPointsWithImageUrl(points);
 
     return serializedPoints;
   }
@@ -32,16 +25,7 @@ export class PointsRepository implements IPointsRepository {
   async findById(id: string): Promise<Point> {
     const point = await knex('points').where('id', id).first();
 
-    const serializedPoint = {
-      ...point,
-      image_url: `http://${ip.address()}:3333/uploads/${point.image}`,
-    }
-
-    /*
-      SELECT * FROM items
-      JOIN point_id on items.id = point_items.item_id
-      WHERE point_items.point_id = (id)
-    */
+    const [ serializedPoint ] = getPointsWithImageUrl([point]);
 
     const items = await knex('items')
       .join('point_items', 'items.id', '=', 'point_items.item_id')
@@ -82,10 +66,7 @@ export class PointsRepository implements IPointsRepository {
 
     const point_id = insertedIds[0];
 
-    const pointItems = items
-      .split(',')
-      .map((item: string) => Number(item.trim()))
-      .map((item_id: number) => {
+    const pointItems = parseItemsIntoNumbers(items).map((item_id: number) => {
         return {
           item_id,
           point_id,
