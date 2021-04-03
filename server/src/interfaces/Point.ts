@@ -7,6 +7,7 @@ export interface Point {
   whatsapp: string;
   latitude: number;
   longitude: number;
+  image: string;
   image_url?: string;
   city: string;
   uf: string;

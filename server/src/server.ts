@@ -3,7 +3,6 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import routes from './routes';
-import ip from 'ip';
 
 import { errors } from 'celebrate';
 
@@ -20,5 +19,5 @@ app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 app.use(errors());
 
 app.listen(3333, () => {
-  console.log(`Server avaliable on http://localhost:3333/\nor https://${ip.address()}:3333`);
+  console.log(`Server avaliable on http://localhost:3333/\n`);
 });
