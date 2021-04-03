@@ -22,8 +22,12 @@ export class PointsRepository implements IPointsRepository {
     return serializedPoints;
   }
 
-  async findById(id: string): Promise<Point> {
+  async findById(id: string): Promise<Point | undefined> {
     const point = await knex('points').where('id', id).first();
+
+    if (!point) {
+      return undefined;
+    }
 
     const [ serializedPoint ] = getPointsWithImageUrl([point]);
 

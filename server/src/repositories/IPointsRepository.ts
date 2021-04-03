@@ -21,6 +21,6 @@ export interface ICreatePointDTO {
 
 export interface IPointsRepository {
   listByLocationAndItems(data: IListPointsDTO): Promise<Point[]>;
-  findById(id: string): Promise<Point>;
+  findById(id: string): Promise<Point | undefined>;
   create(data: ICreatePointDTO): Promise<Point>
 }
