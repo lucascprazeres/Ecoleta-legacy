@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-
-import { ItemsRepository } from "../repositories/ItemsRepository";
-
-const itemsRepository = new ItemsRepository();
+import { container } from "tsyringe";
+import { ListItemsService } from "../services/ListItemsService";
 
 class ItemsController {
   async index(request: Request, response: Response) {
-    const items = await itemsRepository.all();
+    const listItems = container.resolve(ListItemsService);
+
+    const items = await listItems.execute();
   
     return response.json(items);
   }

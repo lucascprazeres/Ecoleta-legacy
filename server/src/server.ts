@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -5,6 +6,8 @@ import routes from './routes';
 import ip from 'ip';
 
 import { errors } from 'celebrate';
+
+import "./container";
 
 const app = express();
 
