@@ -1,6 +1,5 @@
-server/node_modules
-web/node_modules
-mobile/node_modules
+node_modules
+.env
 mobile/.expo/packager-info.json
 mobile/.expo/settings.json
 server/uploads/*.jpeg
