@@ -1,10 +1,10 @@
 {
-  "name": "server",
+  "name": "ecoleta-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx ts-node-dev --transpileOnly --ignore-watch node_modules src/server.ts",
+    "start": "tsnd --transpile-only --ignore-watch node_modules src/server.ts",
     "knex:seed": "knex --knexfile knexfile.ts seed:run",
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
     "knex:rollback": "knex migrate:rollback"
