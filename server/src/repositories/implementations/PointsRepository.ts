@@ -66,7 +66,7 @@ export class PointsRepository implements IPointsRepository {
       uf,
     }
 
-    const insertedIds = await trx('points').insert(point);
+    const insertedIds = await trx('points').insert(point, 'id');
 
     const point_id = insertedIds[0];
 
