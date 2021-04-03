@@ -1,26 +1,34 @@
 import { Request, Response } from "express";
-import { PointsRepository } from "../repositories/PointsRepository";
+import { container } from "tsyringe";
 
-const pointsRepository = new PointsRepository();
+import { ListPointsByLocationAndItemsService } from "../services/ListPointsByLocationAndItemsService";
+import { ShowPointService } from "../services/ShowPointService";
+import { CreatePointService } from "../services/CreatePointService";
 
 class PointsController {
   async index(request: Request, response: Response) {
     const { city, uf, items } = request.query;
 
-    const points = await pointsRepository.listByLocationAndItems({
+    const listPointsByLocationAndItems = container.resolve(
+      ListPointsByLocationAndItemsService,
+    )
+
+    const points = await listPointsByLocationAndItems.execute({
       city: String(city),
       uf: String(uf),
       items: String(items),
-    });
+    })
 
     return response.json(points);
   }
   async show(request: Request, response: Response) {
     const { id } = request.params;
 
-    const { point, items } = await pointsRepository.findById(id);
+    const showPoint = container.resolve(ShowPointService);
 
-    return response.json({ point, items });
+    const point = await showPoint.execute(id);
+
+    return response.json(point);
   }
 
   async create(request: Request, response: Response) {
@@ -36,7 +44,9 @@ class PointsController {
     } = request.body;
     const image = request.file.filename
 
-    const point = await pointsRepository.create({
+    const createPoint = container.resolve(CreatePointService);
+
+    const point = await createPoint.execute({
       name,
       email,
       image,

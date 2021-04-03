@@ -1,25 +1,11 @@
-import knex from '../database/connection';
+import knex from '../../database/connection';
 import ip from 'ip';
 
-interface IListPointsDTO {
-  city: string;
-  uf: string;
-  items: string;
-}
+import { IListPointsDTO, ICreatePointDTO, IPointsRepository } from '../IPointsRepository';
+import { Point } from '../../interfaces/Point';
 
-interface ICreatePointDTO {
-  name: string;
-  image: string;
-  email: string;
-  whatsapp: string;
-  latitude: number;
-  longitude: number;
-  city: string;
-  uf: string;
-  items: string; // '0,1,2'...
-}
 
-export class PointsRepository {
+export class PointsRepository implements IPointsRepository {
   async listByLocationAndItems({ city, uf, items }: IListPointsDTO) {
     const parsedItems = String(items)
       .split(',')
@@ -43,12 +29,8 @@ export class PointsRepository {
     return serializedPoints;
   }
 
-  async findById(id: string) {
+  async findById(id: string): Promise<Point> {
     const point = await knex('points').where('id', id).first();
-
-    if (!point) {
-      throw new Error('Point not found.');
-    }
 
     const serializedPoint = {
       ...point,
@@ -67,7 +49,7 @@ export class PointsRepository {
       .select('items.title');
 
     return {
-      point: serializedPoint,
+      ...serializedPoint,
       items
     }
   }
@@ -82,7 +64,7 @@ export class PointsRepository {
     city,
     uf,
     items
-  }: ICreatePointDTO) {
+  }: ICreatePointDTO): Promise<Point> {
     const trx = await knex.transaction();
 
     const point = {
