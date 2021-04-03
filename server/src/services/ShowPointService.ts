@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../errors/AppError";
 import { IPointsRepository } from "../repositories/IPointsRepository";
 
 @injectable()
@@ -10,6 +11,10 @@ export class ShowPointService {
 
   async execute(id: string) {
     const point = await this.pointsRepostitory.findById(id);
+
+    if (!point) {
+      throw new AppError("Point not found", 404);
+    }
 
     return point;
   }
