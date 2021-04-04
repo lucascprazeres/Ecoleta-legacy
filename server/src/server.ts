@@ -7,7 +7,7 @@ import { errors as validationErrors } from 'celebrate';
 
 import { AppError } from "./errors/AppError";
 
-import routes from './routes';
+import { appRoutes } from "./routes/";
 
 import "dotenv/config";
 import "./container";
@@ -16,7 +16,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(routes);
+app.use(appRoutes);
 
 app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 

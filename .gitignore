@@ -2,4 +2,4 @@ node_modules
 .env
 mobile/.expo/packager-info.json
 mobile/.expo/settings.json
-server/uploads/*.jpeg
+server/uploads/point_images/*
