@@ -1,4 +1,5 @@
 import knex from '../../database/connection';
+import { v4 as uuidv4 } from 'uuid';
 
 import { IListPointsDTO, ICreatePointDTO, IPointsRepository } from '../IPointsRepository';
 import { Point } from '../../interfaces/Point';
@@ -56,6 +57,7 @@ export class PointsRepository implements IPointsRepository {
     const trx = await knex.transaction();
 
     const point = {
+      id: uuidv4(),
       name,
       image,
       email,
@@ -68,7 +70,7 @@ export class PointsRepository implements IPointsRepository {
 
     const insertedIds = await trx('points').insert(point, 'id');
 
-    const point_id = insertedIds[0];
+    const point_id = insertedIds[0] as string;
 
     const pointItems = parseItemsIntoNumbers(items).map((item_id: number) => {
         return {
