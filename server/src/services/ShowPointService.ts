@@ -1,4 +1,6 @@
 import { inject, injectable } from "tsyringe";
+import { validate } from "uuid";
+
 import { AppError } from "../errors/AppError";
 import { IPointsRepository } from "../repositories/IPointsRepository";
 
@@ -10,6 +12,12 @@ export class ShowPointService {
   ) {}
 
   async execute(id: string) {
+    const uuidIsValid = validate(id);
+
+    if (!uuidIsValid) {
+      throw new AppError("Id is invalid.", 400);
+    }
+    
     const point = await this.pointsRepostitory.findById(id);
 
     if (!point) {
