@@ -1,7 +1,7 @@
 import { Item } from "./Item";
 
 export interface Point {
-  id: number;
+  id: string;
   name: string;
   email: string;
   whatsapp: string;
