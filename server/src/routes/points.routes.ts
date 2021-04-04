@@ -10,7 +10,7 @@ import multerConfig from '../config/multer';
 
 const pointsRoutes = express.Router();
 
-const upload = multer(multerConfig);
+const upload = multer(multerConfig['points']);
 
 const pointsController = new PointsController();
 
