@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+
 import { PointsRepository } from "../repositories/PointsRepository";
 
 const pointsRepository = new PointsRepository();
@@ -32,9 +33,9 @@ class PointsController {
       longitude,
       city,
       uf,
-      items
+      items,
     } = request.body;
-    const image = request.file.filename
+    const image = request.file.filename;
 
     const point = await pointsRepository.create({
       name,
@@ -45,8 +46,8 @@ class PointsController {
       longitude,
       city,
       uf,
-      items
-    })
+      items,
+    });
 
     return response.json(point);
   }
