@@ -1,5 +1,6 @@
-import knex from '../database/connection';
-import ip from 'ip';
+import ip from "ip";
+
+import knex from "../database/connection";
 
 interface IListPointsDTO {
   city: string;
@@ -22,38 +23,38 @@ interface ICreatePointDTO {
 export class PointsRepository {
   async listByLocationAndItems({ city, uf, items }: IListPointsDTO) {
     const parsedItems = String(items)
-      .split(',')
-      .map(item => Number(item.trim()));
+      .split(",")
+      .map((item) => Number(item.trim()));
 
-    const points = await knex('points')
-      .join('point_items', 'points.id', '=', 'point_items.point_id')
-      .whereIn('point_items.item_id', parsedItems)
-      .where('city', String(city))
-      .where('uf', String(uf))
+    const points = await knex("points")
+      .join("point_items", "points.id", "=", "point_items.point_id")
+      .whereIn("point_items.item_id", parsedItems)
+      .where("city", String(city))
+      .where("uf", String(uf))
       .distinct()
-      .select('points.*');
+      .select("points.*");
 
-    const serializedPoints = points.map(point => {
+    const serializedPoints = points.map((point) => {
       return {
         ...point,
         image_url: `http://${ip.address()}:3333/uploads/${point.image}`,
-      }
+      };
     });
 
     return serializedPoints;
   }
 
   async findById(id: string) {
-    const point = await knex('points').where('id', id).first();
+    const point = await knex("points").where("id", id).first();
 
     if (!point) {
-      throw new Error('Point not found.');
+      throw new Error("Point not found.");
     }
 
     const serializedPoint = {
       ...point,
       image_url: `http://${ip.address()}:3333/uploads/${point.image}`,
-    }
+    };
 
     /*
       SELECT * FROM items
@@ -61,15 +62,15 @@ export class PointsRepository {
       WHERE point_items.point_id = (id)
     */
 
-    const items = await knex('items')
-      .join('point_items', 'items.id', '=', 'point_items.item_id')
-      .where('point_items.point_id', id)
-      .select('items.title');
+    const items = await knex("items")
+      .join("point_items", "items.id", "=", "point_items.item_id")
+      .where("point_items.point_id", id)
+      .select("items.title");
 
     return {
       point: serializedPoint,
-      items
-    }
+      items,
+    };
   }
 
   async create({
@@ -81,7 +82,7 @@ export class PointsRepository {
     longitude,
     city,
     uf,
-    items
+    items,
   }: ICreatePointDTO) {
     const trx = await knex.transaction();
 
@@ -94,29 +95,29 @@ export class PointsRepository {
       longitude,
       city,
       uf,
-    }
+    };
 
-    const insertedIds = await trx('points').insert(point);
+    const insertedIds = await trx("points").insert(point);
 
     const point_id = insertedIds[0];
 
     const pointItems = items
-      .split(',')
+      .split(",")
       .map((item: string) => Number(item.trim()))
       .map((item_id: number) => {
         return {
           item_id,
           point_id,
-        }
-      })
+        };
+      });
 
-    await trx('point_items').insert(pointItems);
+    await trx("point_items").insert(pointItems);
 
     await trx.commit();
 
     return {
       id: point_id,
       ...point,
-    }
+    };
   }
 }
