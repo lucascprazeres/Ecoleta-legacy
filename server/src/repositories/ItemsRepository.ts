@@ -1,5 +1,3 @@
-import ip from "ip";
-
 import knex from "../database/connection";
 
 export class ItemsRepository {
@@ -10,7 +8,7 @@ export class ItemsRepository {
       return {
         id: item.id,
         title: item.title,
-        image_url: `http://${ip.address()}:3333/uploads/${item.image}`,
+        image_url: `http://localhost:3333/uploads/${item.image}`,
       };
     });
 
