@@ -1,7 +1,6 @@
 import { errors } from "celebrate";
 import cors from "cors";
 import express from "express";
-import ip from "ip";
 import path from "path";
 import * as swaggerUI from "swagger-ui-express";
 
@@ -20,7 +19,5 @@ app.use("/uploads", express.static(path.resolve(__dirname, "..", "uploads")));
 app.use(errors());
 
 app.listen(3333, () => {
-  console.log(
-    `Server avaliable on http://localhost:3333/\nor https://${ip.address()}:3333`
-  );
+  console.log(`Server avaliable on http://localhost:3333/`);
 });
