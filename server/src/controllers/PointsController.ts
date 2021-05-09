@@ -5,7 +5,7 @@ import { PointsRepository } from "../repositories/PointsRepository";
 const pointsRepository = new PointsRepository();
 
 class PointsController {
-  async index(request: Request, response: Response) {
+  async index(request: Request, response: Response): Promise<Response> {
     const { city, uf, items } = request.query;
 
     const points = await pointsRepository.listByLocationAndItems({
@@ -16,7 +16,7 @@ class PointsController {
 
     return response.json(points);
   }
-  async show(request: Request, response: Response) {
+  async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const { point, items } = await pointsRepository.findById(id);
@@ -24,7 +24,7 @@ class PointsController {
     return response.json({ point, items });
   }
 
-  async create(request: Request, response: Response) {
+  async create(request: Request, response: Response): Promise<Response> {
     const {
       name,
       email,

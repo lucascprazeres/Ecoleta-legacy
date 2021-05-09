@@ -24,7 +24,7 @@
                       "type": "object",
                       "properties": {
                         "id": {
-                          "type": "number"
+                          "type": "integer"
                         },
                         "title": {
                           "type": "string"
@@ -72,7 +72,7 @@
                     "items": {
                       "type": "array",
                       "items": {
-                        "type": "number"
+                        "type": "integer"
                       }
                     },
                     "image": {
@@ -113,25 +113,87 @@
                       "uf": {
                         "type": "string"
                       },
+                      "image": {
+                        "type": "string",
+                        "format": "binary"
+                      },
+                      "latitude": {
+                        "type": "number"
+                      },
+                      "longitude": {
+                        "type": "number"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      },
                       "items": {
                         "type": "array",
                         "items": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "title": {
-                                "type": "string"
-                              },
-                              "image_url": {
-                                "type": "string"
-                              }
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "image_url": {
+                              "type": "string"
                             }
                           }
                         }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/points/{id}": {
+        "get": {
+          "tags": [
+            "points"
+          ],
+          "summary": "Show point by id",
+          "description": "Shows detailed info about a single point",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "numeric ID of the point to get"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Resource returned sucessfully.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "whatsapp": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "uf": {
+                        "type": "string"
                       },
                       "image": {
                         "type": "string",
@@ -148,6 +210,128 @@
                       },
                       "updated_at": {
                         "type": "string"
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "image_url": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/points/?{city}&{uf}&{items}": {
+        "get": {
+          "tags": [
+            "points"
+          ],
+          "summary": "Show point by id",
+          "description": "Shows detailed info about a single point",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "city",
+              "schema": {
+                "type": "string"
+              },
+              "required": true,
+              "description": "name of the city where the point is"
+            },
+            {
+              "in": "query",
+              "name": "uf",
+              "schema": {
+                "type": "string"
+              },
+              "required": true,
+              "description": "name of the uf (Unidade Federal) where the point is"
+            },
+            {
+              "in": "query",
+              "name": "items",
+              "schema": {
+                "type": "string"
+              },
+              "required": true,
+              "description": "ids of the available itens, separeted by commas"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Resource returned sucessfully.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "whatsapp": {
+                            "type": "string"
+                          },
+                          "city": {
+                            "type": "string"
+                          },
+                          "uf": {
+                            "type": "string"
+                          },
+                          "image": {
+                            "type": "string",
+                            "format": "binary"
+                          },
+                          "latitude": {
+                            "type": "number"
+                          },
+                          "longitude": {
+                            "type": "number"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "updated_at": {
+                            "type": "string"
+                          },
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number"
+                                },
+                                "title": {
+                                  "type": "string"
+                                },
+                                "image_url": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
                       }
                     }
                   }
