@@ -1,4 +1,5 @@
 import knex from "../database/connection";
+import { IPoint } from "../interfaces";
 
 interface IListPointsDTO {
   city: string;
@@ -19,7 +20,11 @@ interface ICreatePointDTO {
 }
 
 export class PointsRepository {
-  async listByLocationAndItems({ city, uf, items }: IListPointsDTO) {
+  async listByLocationAndItems({
+    city,
+    uf,
+    items,
+  }: IListPointsDTO): Promise<IPoint[]> {
     const parsedItems = String(items)
       .split(",")
       .map((item) => Number(item.trim()));
@@ -42,7 +47,7 @@ export class PointsRepository {
     return serializedPoints;
   }
 
-  async findById(id: string) {
+  async findById(id: string): Promise<IPoint> {
     const point = await knex("points").where("id", id).first();
 
     if (!point) {
@@ -81,7 +86,7 @@ export class PointsRepository {
     city,
     uf,
     items,
-  }: ICreatePointDTO) {
+  }: ICreatePointDTO): Promise<IPoint> {
     const trx = await knex.transaction();
 
     const point = {

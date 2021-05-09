@@ -5,7 +5,7 @@ import { ItemsRepository } from "../repositories/ItemsRepository";
 const itemsRepository = new ItemsRepository();
 
 class ItemsController {
-  async index(request: Request, response: Response) {
+  async index(request: Request, response: Response): Promise<Response> {
     const items = await itemsRepository.all();
 
     return response.json(items);
