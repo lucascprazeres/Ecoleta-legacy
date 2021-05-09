@@ -14,7 +14,7 @@ export interface IPoint {
   longitude: number;
   city: string;
   uf: string;
-  created_at: Date;
-  updated_at: Date;
-  items: IItem[];
+  created_at?: Date;
+  updated_at?: Date;
+  items?: IItem[];
 }
